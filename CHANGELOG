@@ -1,0 +1,5 @@
+# Version History
+
+## unreleased
+
+* [MCCS-1535] Bootstrap repo (with help from ska-cookiecutter-pypackage)
