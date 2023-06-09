@@ -34,8 +34,8 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 html_context = {
-    "favicon": "img/favicon_mono.ico",
-    "logo": "img/logo.png",
+    "favicon_url": "img/favicon_mono.ico",
+    "logo_url": "img/logo.png",
     "theme_logo_only": True,
 }
 
