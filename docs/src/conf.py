@@ -48,7 +48,21 @@ autodoc_mock_imports = [
 #################################
 # intersphinx config
 #################################
-intersphinx_mapping = {'python': ('https://docs.python.org/3.10', None)}
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3.10", None),
+    "ska-control-model": ("https://developer.skao.int/projects/ska-control-model/en/0.3.1/", None),
+}
 
 nitpick_ignore = [
+    ("py:class", "daq_pb2.ConfigurationResponse"),
+    ("py:class", "daq_pb2.commandResponse"),
+    ("py:class", "daq_pb2.configDaqRequest"),
+    ("py:class", "daq_pb2.daqStatusRequest"),
+    ("py:class", "daq_pb2.daqStatusResponse"),
+    ("py:class", "daq_pb2.getConfigRequest"),
+    ("py:class", "daq_pb2.startDaqRequest"),
+    ("py:class", "daq_pb2.startDaqResponse"),
+    ("py:class", "daq_pb2.stopDaqRequest"),
+    ("py:class", "daq_pb2.stopDaqResponse"),
+    ("py:class", "grpc.ServicerContext"),
 ]

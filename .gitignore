@@ -1,5 +1,6 @@
 __pycache__
 docs/build
 build
+.coverage
 .coverage.mypy_cache
 .pytest_cache
