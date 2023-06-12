@@ -19,7 +19,7 @@ def setup(app):
 project = 'ska-low-mccs-daq-interface'
 copyright = "2023, SKAO"
 author = "MCCS Team <drew.devereux@skao.int>"
-release = "0.0.1"
+release = '0.1.0'
 
 extensions = [
     "sphinx.ext.autodoc",

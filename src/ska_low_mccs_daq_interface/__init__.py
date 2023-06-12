@@ -15,7 +15,7 @@ with the DAQ itself.
 
 __author__ = """MCCS Team"""
 __email__ = "drew.devereux@skao.int"
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 
 __all__ = [
