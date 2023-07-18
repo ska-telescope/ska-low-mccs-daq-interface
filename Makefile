@@ -3,7 +3,7 @@ include .make/base.mk
 ########################################
 # DOCS
 ########################################
-DOCS_SPHINXOPTS = -n -W --keep-going
+DOCS_SPHINXOPTS = -W --keep-going
 
 docs-pre-build:
 	poetry config virtualenvs.create false

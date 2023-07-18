@@ -12,10 +12,6 @@ import sphinx.ext.autodoc
 sys.path.insert(0, os.path.abspath("../../src"))
 
 
-def setup(app):
-    app.add_css_file("css/custom.css")
-
-
 project = 'ska-low-mccs-daq-interface'
 copyright = "2023, SKAO"
 author = "MCCS Team <drew.devereux@skao.int>"
@@ -27,17 +23,13 @@ extensions = [
     "sphinx_autodoc_typehints",
 ]
 
-templates_path = ["_templates"]
+# templates_path = []
 exclude_patterns = []
 
-html_theme = "sphinx_rtd_theme"
-html_static_path = ["_static"]
+html_theme = "ska_ser_sphinx_theme"
+# html_static_path = []
 
-html_context = {
-    "favicon_url": "img/favicon_mono.ico",
-    "logo_url": "img/logo.png",
-    "theme_logo_only": True,
-}
+html_context = {}
 
 #################################
 # autodoc config
@@ -52,6 +44,8 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3.10", None),
     "ska-control-model": ("https://developer.skao.int/projects/ska-control-model/en/0.3.1/", None),
 }
+
+nitpicky = True
 
 nitpick_ignore = [
     ("py:class", "daq_pb2.ConfigurationResponse"),

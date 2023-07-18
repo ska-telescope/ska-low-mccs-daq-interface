@@ -2,4 +2,9 @@
 
 ## unreleased
 
+* [MCCS-1636] Use ska-ser-sphinx-theme for documentation
+
+## 0.1.0
+
+* [MCCS-1597] Add interface code from ska-low-mccs-daq
 * [MCCS-1535] Bootstrap repo (with help from ska-cookiecutter-pypackage)
