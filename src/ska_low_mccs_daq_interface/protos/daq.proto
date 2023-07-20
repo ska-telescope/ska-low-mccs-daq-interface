@@ -76,7 +76,7 @@ service Daq{
 
         ;return; A json string containing the status of this DaqReceiver.*/
     }
-    rpc BandpassMonitorStart(bandpassMonitorStartRequest) returns (stream commandResponse){
+    rpc BandpassMonitorStart(bandpassMonitorStartRequest) returns (commandResponse){
         /*
         Begin monitoring antenna bandpasses.
 

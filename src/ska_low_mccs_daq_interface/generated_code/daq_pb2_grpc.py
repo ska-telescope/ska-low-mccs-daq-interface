@@ -46,7 +46,7 @@ class DaqStub(object):
                 request_serializer=daq__pb2.daqStatusRequest.SerializeToString,
                 response_deserializer=daq__pb2.daqStatusResponse.FromString,
                 )
-        self.BandpassMonitorStart = channel.unary_stream(
+        self.BandpassMonitorStart = channel.unary_unary(
                 '/daq.Daq/BandpassMonitorStart',
                 request_serializer=daq__pb2.bandpassMonitorStartRequest.SerializeToString,
                 response_deserializer=daq__pb2.commandResponse.FromString,
@@ -215,7 +215,7 @@ def add_DaqServicer_to_server(servicer, server):
                     request_deserializer=daq__pb2.daqStatusRequest.FromString,
                     response_serializer=daq__pb2.daqStatusResponse.SerializeToString,
             ),
-            'BandpassMonitorStart': grpc.unary_stream_rpc_method_handler(
+            'BandpassMonitorStart': grpc.unary_unary_rpc_method_handler(
                     servicer.BandpassMonitorStart,
                     request_deserializer=daq__pb2.bandpassMonitorStartRequest.FromString,
                     response_serializer=daq__pb2.commandResponse.SerializeToString,
@@ -350,7 +350,7 @@ class Daq(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/daq.Daq/BandpassMonitorStart',
+        return grpc.experimental.unary_unary(request, target, '/daq.Daq/BandpassMonitorStart',
             daq__pb2.bandpassMonitorStartRequest.SerializeToString,
             daq__pb2.commandResponse.FromString,
             options, channel_credentials,

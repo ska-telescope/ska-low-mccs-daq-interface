@@ -298,7 +298,7 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         self: DaqServer,
         request: daq_pb2.bandpassMonitorStartRequest,
         context: grpc.ServicerContext,
-    ) -> daq_pb2.bandpassMonitorStartResponse:
+    ) -> daq_pb2.commandResponse:
         """
         Begin monitoring antenna bandpasses.
 
@@ -306,14 +306,12 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param context: the gRPC servicer context
         """
         print("IN DAQ SERVER START BANDPASS")
-        #(result_code, message) = self._backend.start_bandpass_monitor(request.config)
-        for (result_code, message) in self._backend.start_bandpass_monitor(request.config):
-            yield daq_pb2.commandResponse(result_code=result_code, message=message)
+        (result_code, message) = self._backend.start_bandpass_monitor(request.config)
         print("AFTER DAQ SERVER START")
-        # return daq_pb2.commandResponse(
-        #     result_code=result_code,  # type: ignore[arg-type]
-        #     message=message,
-        # )
+        return daq_pb2.commandResponse(
+            result_code=result_code,  # type: ignore[arg-type]
+            message=message,
+        )
 
     def BandpassMonitorStop(
         self: DaqServer,
