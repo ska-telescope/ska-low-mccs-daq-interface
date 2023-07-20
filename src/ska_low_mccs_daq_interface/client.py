@@ -175,7 +175,7 @@ class DaqClient:
         with grpc.insecure_channel(self._grpc_channel) as channel:
             stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
             response = stub.BandpassMonitorStart(
-                daq_pb2.bandpassMonitorStartRequest(argin=argin)
+                daq_pb2.bandpassMonitorStartRequest(config=argin)
             )
         return (response.result_code, response.message)
 
