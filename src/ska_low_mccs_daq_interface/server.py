@@ -305,8 +305,7 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param request: the gRPC request
         :param context: the gRPC servicer context
         """
-        argin = json.loads(request.config)
-        (result_code, message) = self._backend.start_bandpass_monitor(argin)
+        (result_code, message) = self._backend.start_bandpass_monitor(request.config)
         return daq_pb2.commandResponse(
             result_code=result_code,  # type: ignore[arg-type]
             message=message,
