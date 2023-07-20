@@ -305,7 +305,9 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param request: the gRPC request
         :param context: the gRPC servicer context
         """
+        print("IN DAQ SERVER START BANDPASS")
         (result_code, message) = self._backend.start_bandpass_monitor(request.config)
+        print("AFTER DAQ SERVER START BANDPASS")
         return daq_pb2.commandResponse(
             result_code=result_code,  # type: ignore[arg-type]
             message=message,
