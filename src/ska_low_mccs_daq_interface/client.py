@@ -172,20 +172,22 @@ class DaqClient:
                 is called.
                 Default: False.
         """
-        print("IN DAQ CLIENT START BANDPASS")
+        print(f"IN DAQ CLIENT START BANDPASS WITH: {locals()}")
         with grpc.insecure_channel(self._grpc_channel) as channel:
             stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
             response = stub.BandpassMonitorStart(
                 daq_pb2.bandpassMonitorStartRequest(config=argin)
             )
-        print("AFTER DAQ CLIENT START BANDPASS")
+        print(f"AFTER DAQ CLIENT START BANDPASS: {(response.result_code, response.message)}")
         return (response.result_code, response.message)
 
     def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
         """
         Cease monitoring antenna bandpasses.
         """
+        print("IN DAQ CLIENT STOP BANDPASS")
         with grpc.insecure_channel(self._grpc_channel) as channel:
             stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
             response = stub.BandpassMonitorStop(daq_pb2.bandpassMonitorStopRequest())
+        print(f"AFTER DAQ CLIENT STOP BANDPASS: {(response.result_code, response.message)}")
         return (response.result_code, response.message)
