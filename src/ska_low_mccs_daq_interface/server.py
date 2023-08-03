@@ -24,7 +24,7 @@ class DaqServerBackendProtocol(Protocol):
     def start(
         self: DaqServerBackendProtocol,
         modes_to_start: str,
-    ) -> Iterator[str | tuple[str, str]]:
+    ) -> Iterator[str | tuple[str, str, str]]:
         """
         Start the DaqConsumers.
 
