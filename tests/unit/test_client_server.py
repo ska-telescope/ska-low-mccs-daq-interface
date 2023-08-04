@@ -122,7 +122,12 @@ def test_start_daq(daq_client: DaqClient, mock_backend: unittest.mock.Mock) -> N
     :param mock_backend: a mock backend for the DAQ server.
     """
     mock_backend.start.return_value = iter(
-        ["LISTENING", ("foo", "foo.hdf5"), ("bah", "bah.hdf5"), "STOPPED"]
+        [
+            "LISTENING",
+            ("foo", "foo.hdf5", "{}"),
+            ("bah", "bah.hdf5", "{'foo': 'bah'}"),
+            "STOPPED",
+        ]
     )
 
     modes_to_start = "foo, bah"
@@ -136,8 +141,12 @@ def test_start_daq(daq_client: DaqClient, mock_backend: unittest.mock.Mock) -> N
         "status": TaskStatus.COMPLETED,
         "message": "Daq has been started and is listening",
     }
-    assert next(responses) == {"types": "foo", "files": "foo.hdf5"}
-    assert next(responses) == {"types": "bah", "files": "bah.hdf5"}
+    assert next(responses) == {"types": "foo", "files": "foo.hdf5", "extras": "{}"}
+    assert next(responses) == {
+        "types": "bah",
+        "files": "bah.hdf5",
+        "extras": "{'foo': 'bah'}",
+    }
 
     with pytest.raises(StopIteration):
         _ = next(responses)

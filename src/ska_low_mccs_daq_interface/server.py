@@ -24,7 +24,7 @@ class DaqServerBackendProtocol(Protocol):
     def start(
         self: DaqServerBackendProtocol,
         modes_to_start: str,
-    ) -> Iterator[str | tuple[str, str]]:
+    ) -> Iterator[str | tuple[str, str, str]]:
         """
         Start the DaqConsumers.
 
@@ -141,9 +141,10 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
             match update:
                 case "LISTENING":
                     response.call_state.state = daq_pb2.CallState.LISTENING
-                case (data_types_received, files_written):
+                case (data_types_received, files_written, extra_info):
                     response.call_info.data_types_received = data_types_received
                     response.call_info.files_written = files_written
+                    response.call_info.extra_info = extra_info
                 case "STOPPED":
                     response.call_state.state = daq_pb2.CallState.STOPPED
             yield response
