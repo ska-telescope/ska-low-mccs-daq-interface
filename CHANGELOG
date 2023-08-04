@@ -1,7 +1,8 @@
 # Version History
 
-## unreleased
+## 0.1.1
 
+* [MCCS-1586] Allow passing of metadata from DaqHandler
 * [MCCS-1636] Use ska-ser-sphinx-theme for documentation
 
 ## 0.1.0
