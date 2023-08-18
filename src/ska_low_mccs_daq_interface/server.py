@@ -108,7 +108,7 @@ class DaqServerBackendProtocol(Protocol):
     def start_bandpass_monitor(
         self: DaqServerBackendProtocol,
         argin: str,
-    ) -> Iterator[str | tuple[str, str]]:
+    ) -> Iterator[dict[str, Any]]:
         """
         Begin monitoring antenna bandpasses.
 
@@ -307,7 +307,7 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         self: DaqServer,
         request: daq_pb2.bandpassMonitorStartRequest,
         context: grpc.ServicerContext,
-    ) -> daq_pb2.commandResponse:
+    ) -> Iterator[daq_pb2.bandpassMonitorStartResponse]:
         """
         Begin monitoring antenna bandpasses.
 
@@ -323,15 +323,15 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
                 case (result_code, message):
                     response.result_code = result_code
                     response.message = message
-                    response.x_bandpass_plot = None
-                    response.y_bandpass_plot = None
-                    response.rms_plot = None
+                    # response.x_bandpass_plot = None
+                    # response.y_bandpass_plot = None
+                    # response.rms_plot = None
                 case (result_code, message, x_bandpass_plot, y_bandpass_plot):
                     response.result_code = result_code
                     response.message = message
                     response.x_bandpass_plot = x_bandpass_plot
                     response.y_bandpass_plot = y_bandpass_plot
-                    response.rms_plot = None
+                    # response.rms_plot = None
                 case (result_code, message, x_bandpass_plot, y_bandpass_plot, rms_plot):
                     response.result_code = result_code
                     response.message = message
