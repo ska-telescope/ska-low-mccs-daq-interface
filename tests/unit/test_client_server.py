@@ -160,9 +160,11 @@ def test_stop_daq(daq_client: DaqClient, mock_backend: unittest.mock.Mock) -> No
     mock_backend.stop.assert_called_once_with()
 
 
-def test_start_bandpass_monitor(daq_client: DaqClient, mock_backend: unittest.mock.Mock) -> None:
+def test_start_bandpass_monitor(
+    daq_client: DaqClient, mock_backend: unittest.mock.Mock
+) -> None:
     """
-    Test that a ``start_bandpass_monitor`` client call results in the expected backend call.
+    Test that ``start_bandpass_monitor`` results in the expected backend call.
 
     :param daq_client: the DAQ client object
     :param mock_backend: a mock backend for the DAQ server.
@@ -175,9 +177,11 @@ def test_start_bandpass_monitor(daq_client: DaqClient, mock_backend: unittest.mo
     mock_backend.start_bandpass_monitor.assert_called_once_with("configuration_string")
 
 
-def test_stop_bandpass_monitor(daq_client: DaqClient, mock_backend: unittest.mock.Mock) -> None:
+def test_stop_bandpass_monitor(
+    daq_client: DaqClient, mock_backend: unittest.mock.Mock
+) -> None:
     """
-    Test that a ``stop_bandpass_monitor`` client call results in the expected backend call.
+    Test that ``stop_bandpass_monitor`` results in the expected backend call.
 
     :param daq_client: the DAQ client object
     :param mock_backend: a mock backend for the DAQ server.

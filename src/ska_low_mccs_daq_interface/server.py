@@ -108,25 +108,34 @@ class DaqServerBackendProtocol(Protocol):
     def start_bandpass_monitor(
         self: DaqServerBackendProtocol,
         argin: str,
-    ) -> tuple[ResultCode, str]:
+    ) -> Iterator[str | tuple[str, str]]:
         """
         Begin monitoring antenna bandpasses.
 
-        :param argin: A dictionary containing command arguments.
-            Keys:
-            * station_config_path: Path to station configuration file.
-            * plot_directory: Plotting directory.
-            * monitor_rms: Flag to enable or disable RMS monitoring. Default False.
-            * auto_handle_daq: Flag to indicate whether the DaqReceiver should be automatically
-                reconfigured, started and stopped during this process if necessary. Default False.
+        :param argin: A json string with keywords
+            - station_config_path
+            Path to a station configuration file.
+            - plot_directory
+            Directory in which to store bandpass plots.
+            - monitor_rms
+            Whether or not to additionally produce RMS plots.
+            Default: False.
+            - auto_handle_daq
+            Whether DAQ should be automatically reconfigured,
+            started and stopped without user action if necessary.
+            This set to False means we expect DAQ to already
+            be properly configured and listening for traffic
+            and DAQ will not be stopped when `StopBandpassMonitor`
+            is called.
+            Default: False.
+
+        :return: A streamed response containing bandpass plots.
         """  # noqa: DAR202
 
     def stop_bandpass_monitor(
         self: DaqServerBackendProtocol,
     ) -> tuple[ResultCode, str]:
-        """
-        Cease monitoring antenna bandpasses.
-        """  # noqa: DAR202
+        """Cease monitoring antenna bandpasses."""  # noqa: DAR202
 
 
 class DaqServer(daq_pb2_grpc.DaqServicer):
@@ -306,12 +315,31 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param context: the gRPC servicer context
         """
         print("IN DAQ SERVER START BANDPASS")
-        (result_code, message) = self._backend.start_bandpass_monitor(request.config)
-        print(f"AFTER DAQ SERVER START BANDPASS: {(result_code, message)}")
-        return daq_pb2.commandResponse(
-            result_code=result_code,  # type: ignore[arg-type]
-            message=message,
-        )
+        #        (result_code, message) =
+        # self._backend.start_bandpass_monitor(request.config)
+        for update in self._backend.start_bandpass_monitor(request.config):
+            response = daq_pb2.bandpassMonitorStartResponse()
+            match update:
+                case (result_code, message):
+                    response.result_code = result_code
+                    response.message = message
+                    response.x_bandpass_plot = None
+                    response.y_bandpass_plot = None
+                    response.rms_plot = None
+                case (result_code, message, x_bandpass_plot, y_bandpass_plot):
+                    response.result_code = result_code
+                    response.message = message
+                    response.x_bandpass_plot = x_bandpass_plot
+                    response.y_bandpass_plot = y_bandpass_plot
+                    response.rms_plot = None
+                case (result_code, message, x_bandpass_plot, y_bandpass_plot, rms_plot):
+                    response.result_code = result_code
+                    response.message = message
+                    response.x_bandpass_plot = x_bandpass_plot
+                    response.y_bandpass_plot = y_bandpass_plot
+                    response.rms_plot = rms_plot
+
+            yield response
 
     def BandpassMonitorStop(
         self: DaqServer,
