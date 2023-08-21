@@ -47,120 +47,6 @@ ABORTED: ResultCode.ValueType  # 7
 global___ResultCode = ResultCode
 
 @typing_extensions.final
-class bandpassMonitorStartRequest(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-
-    CONFIG_FIELD_NUMBER: builtins.int
-    config: builtins.str
-    """
-    CURRENT MEMBERS
-    string config.station_config_path
-    string config.plot_directory
-    bool config.monitor_rms
-    bool config.auto_handle_daq
-    """
-    def __init__(
-        self,
-        *,
-        config: builtins.str = ...,
-    ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["config", b"config"]
-    ) -> None: ...
-
-global___bandpassMonitorStartRequest = bandpassMonitorStartRequest
-
-@typing_extensions.final
-class bandpassMonitorStartResponse(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-
-    RESULT_CODE_FIELD_NUMBER: builtins.int
-    MESSAGE_FIELD_NUMBER: builtins.int
-    X_BANDPASS_PLOT_FIELD_NUMBER: builtins.int
-    Y_BANDPASS_PLOT_FIELD_NUMBER: builtins.int
-    RMS_PLOT_FIELD_NUMBER: builtins.int
-    result_code: global___ResultCode.ValueType
-    message: builtins.str
-    x_bandpass_plot: builtins.bytes
-    y_bandpass_plot: builtins.bytes
-    rms_plot: builtins.bytes
-    def __init__(
-        self,
-        *,
-        result_code: global___ResultCode.ValueType = ...,
-        message: builtins.str = ...,
-        x_bandpass_plot: builtins.bytes | None = ...,
-        y_bandpass_plot: builtins.bytes | None = ...,
-        rms_plot: builtins.bytes | None = ...,
-    ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_rms_plot",
-            b"_rms_plot",
-            "_x_bandpass_plot",
-            b"_x_bandpass_plot",
-            "_y_bandpass_plot",
-            b"_y_bandpass_plot",
-            "rms_plot",
-            b"rms_plot",
-            "x_bandpass_plot",
-            b"x_bandpass_plot",
-            "y_bandpass_plot",
-            b"y_bandpass_plot",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_rms_plot",
-            b"_rms_plot",
-            "_x_bandpass_plot",
-            b"_x_bandpass_plot",
-            "_y_bandpass_plot",
-            b"_y_bandpass_plot",
-            "message",
-            b"message",
-            "result_code",
-            b"result_code",
-            "rms_plot",
-            b"rms_plot",
-            "x_bandpass_plot",
-            b"x_bandpass_plot",
-            "y_bandpass_plot",
-            b"y_bandpass_plot",
-        ],
-    ) -> None: ...
-    @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_rms_plot", b"_rms_plot"]
-    ) -> typing_extensions.Literal["rms_plot"] | None: ...
-    @typing.overload
-    def WhichOneof(
-        self,
-        oneof_group: typing_extensions.Literal["_x_bandpass_plot", b"_x_bandpass_plot"],
-    ) -> typing_extensions.Literal["x_bandpass_plot"] | None: ...
-    @typing.overload
-    def WhichOneof(
-        self,
-        oneof_group: typing_extensions.Literal["_y_bandpass_plot", b"_y_bandpass_plot"],
-    ) -> typing_extensions.Literal["y_bandpass_plot"] | None: ...
-
-global___bandpassMonitorStartResponse = bandpassMonitorStartResponse
-
-@typing_extensions.final
-class bandpassMonitorStopRequest(google.protobuf.message.Message):
-    """Empty"""
-
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-
-    def __init__(
-        self,
-    ) -> None: ...
-
-global___bandpassMonitorStopRequest = bandpassMonitorStopRequest
-
-@typing_extensions.final
 class CallState(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -606,6 +492,120 @@ class ConfigurationResponse(google.protobuf.message.Message):
     ) -> None: ...
 
 global___ConfigurationResponse = ConfigurationResponse
+
+@typing_extensions.final
+class bandpassMonitorStartRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    CONFIG_FIELD_NUMBER: builtins.int
+    config: builtins.str
+    """
+    CURRENT MEMBERS
+    string config.station_config_path
+    string config.plot_directory
+    bool config.monitor_rms
+    bool config.auto_handle_daq
+    """
+    def __init__(
+        self,
+        *,
+        config: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["config", b"config"]
+    ) -> None: ...
+
+global___bandpassMonitorStartRequest = bandpassMonitorStartRequest
+
+@typing_extensions.final
+class bandpassMonitorStartResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    RESULT_CODE_FIELD_NUMBER: builtins.int
+    MESSAGE_FIELD_NUMBER: builtins.int
+    X_BANDPASS_PLOT_FIELD_NUMBER: builtins.int
+    Y_BANDPASS_PLOT_FIELD_NUMBER: builtins.int
+    RMS_PLOT_FIELD_NUMBER: builtins.int
+    result_code: global___ResultCode.ValueType
+    message: builtins.str
+    x_bandpass_plot: builtins.str
+    y_bandpass_plot: builtins.str
+    rms_plot: builtins.str
+    def __init__(
+        self,
+        *,
+        result_code: global___ResultCode.ValueType = ...,
+        message: builtins.str = ...,
+        x_bandpass_plot: builtins.str | None = ...,
+        y_bandpass_plot: builtins.str | None = ...,
+        rms_plot: builtins.str | None = ...,
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "_rms_plot",
+            b"_rms_plot",
+            "_x_bandpass_plot",
+            b"_x_bandpass_plot",
+            "_y_bandpass_plot",
+            b"_y_bandpass_plot",
+            "rms_plot",
+            b"rms_plot",
+            "x_bandpass_plot",
+            b"x_bandpass_plot",
+            "y_bandpass_plot",
+            b"y_bandpass_plot",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "_rms_plot",
+            b"_rms_plot",
+            "_x_bandpass_plot",
+            b"_x_bandpass_plot",
+            "_y_bandpass_plot",
+            b"_y_bandpass_plot",
+            "message",
+            b"message",
+            "result_code",
+            b"result_code",
+            "rms_plot",
+            b"rms_plot",
+            "x_bandpass_plot",
+            b"x_bandpass_plot",
+            "y_bandpass_plot",
+            b"y_bandpass_plot",
+        ],
+    ) -> None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_rms_plot", b"_rms_plot"]
+    ) -> typing_extensions.Literal["rms_plot"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self,
+        oneof_group: typing_extensions.Literal["_x_bandpass_plot", b"_x_bandpass_plot"],
+    ) -> typing_extensions.Literal["x_bandpass_plot"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self,
+        oneof_group: typing_extensions.Literal["_y_bandpass_plot", b"_y_bandpass_plot"],
+    ) -> typing_extensions.Literal["y_bandpass_plot"] | None: ...
+
+global___bandpassMonitorStartResponse = bandpassMonitorStartResponse
+
+@typing_extensions.final
+class bandpassMonitorStopRequest(google.protobuf.message.Message):
+    """Empty"""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    def __init__(
+        self,
+    ) -> None: ...
+
+global___bandpassMonitorStopRequest = bandpassMonitorStopRequest
 
 @typing_extensions.final
 class empty(google.protobuf.message.Message):

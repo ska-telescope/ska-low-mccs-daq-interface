@@ -108,7 +108,7 @@ class DaqServerBackendProtocol(Protocol):
     def start_bandpass_monitor(
         self: DaqServerBackendProtocol,
         argin: str,
-    ) -> Iterator[dict[str, Any]]:
+    ) -> Iterator[tuple[ResultCode, str, str | None, str | None, str | None]]:
         """
         Begin monitoring antenna bandpasses.
 
@@ -315,31 +315,43 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param context: the gRPC servicer context
         """
         print("IN DAQ SERVER START BANDPASS")
-        #        (result_code, message) =
-        # self._backend.start_bandpass_monitor(request.config)
-        for update in self._backend.start_bandpass_monitor(request.config):
-            response = daq_pb2.bandpassMonitorStartResponse()
-            match update:
-                case (result_code, message):
-                    response.result_code = result_code
-                    response.message = message
-                    # response.x_bandpass_plot = None
-                    # response.y_bandpass_plot = None
-                    # response.rms_plot = None
-                case (result_code, message, x_bandpass_plot, y_bandpass_plot):
-                    response.result_code = result_code
-                    response.message = message
-                    response.x_bandpass_plot = x_bandpass_plot
-                    response.y_bandpass_plot = y_bandpass_plot
-                    # response.rms_plot = None
-                case (result_code, message, x_bandpass_plot, y_bandpass_plot, rms_plot):
-                    response.result_code = result_code
-                    response.message = message
-                    response.x_bandpass_plot = x_bandpass_plot
-                    response.y_bandpass_plot = y_bandpass_plot
-                    response.rms_plot = rms_plot
+        #        (result_code, message, x_bandpass, y_bandpass, rms)
+        for (
+            result_code,
+            message,
+            x_bandpass,
+            y_bandpass,
+            rms,
+        ) in self._backend.start_bandpass_monitor(request.config):
+            # response = daq_pb2.bandpassMonitorStartResponse()
+            # match update:
+            #     case (result_code, message):
+            #         response.result_code = result_code
+            #         response.message = message
+            #         # response.x_bandpass_plot = None
+            #         # response.y_bandpass_plot = None
+            #         # response.rms_plot = None
+            #     case (result_code, message, x_bandpass_plot, y_bandpass_plot):
+            #         response.result_code = result_code
+            #         response.message = message
+            #         response.x_bandpass_plot = x_bandpass_plot
+            #         response.y_bandpass_plot = y_bandpass_plot
+            #         # response.rms_plot = None
+            #     case (result_code, message, x_bandpass_plot,
+            # y_bandpass_plot, rms_plot):
+            #         response.result_code = result_code
+            #         response.message = message
+            #         response.x_bandpass_plot = x_bandpass_plot
+            #         response.y_bandpass_plot = y_bandpass_plot
+            #         response.rms_plot = rms_plot
 
-            yield response
+            yield daq_pb2.bandpassMonitorStartResponse(
+                result_code=result_code,  # type: ignore[arg-type]
+                message=message,
+                x_bandpass_plot=x_bandpass,
+                y_bandpass_plot=y_bandpass,
+                rms_plot=rms,
+            )
 
     def BandpassMonitorStop(
         self: DaqServer,

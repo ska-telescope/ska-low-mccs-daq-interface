@@ -58,5 +58,7 @@ nitpick_ignore = [
     ("py:class", "daq_pb2.startDaqResponse"),
     ("py:class", "daq_pb2.stopDaqRequest"),
     ("py:class", "daq_pb2.stopDaqResponse"),
+    ("py:class", "daq_pb2.bandpassMonitorStartRequest"),
+    ("py:class", "daq_pb2.bandpassMonitorStartResponse"),
     ("py:class", "grpc.ServicerContext"),
 ]
