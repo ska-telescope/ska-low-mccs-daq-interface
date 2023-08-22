@@ -202,6 +202,8 @@ class DaqClient:
                     response.rms_plot if response.HasField["rms_plot"] else None
                 ]
                 print(f"response_dict: {response_dict}", flush=True)
+                if response.result_code == ResultCode.OK and response.message == "Bandpass monitoring complete.":
+                    responses.cancel()
                 yield response_dict
 
     def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
