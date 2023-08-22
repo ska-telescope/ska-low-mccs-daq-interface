@@ -178,11 +178,12 @@ class DaqClient:
             responses = stub.BandpassMonitorStart(
                 daq_pb2.bandpassMonitorStartRequest(config=argin)
             )
+            print("BEFORE FIRST YIELD")
             yield {
-                "status": TaskStatus.IN_PROGRESS,
+                "result_code": TaskStatus.IN_PROGRESS,
                 "message": "StartBandpassMonitor command issued to gRPC stub",
             }
-            print("ENTERING RESPONSES")
+            print("AFTER FIRST YIELD")
             for response in responses:
                 response_dict: dict[str, Any] = {}
                 response_dict["result_code"] = response.result_code
