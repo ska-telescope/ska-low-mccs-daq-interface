@@ -179,33 +179,37 @@ class DaqClient:
             responses = stub.BandpassMonitorStart(
                 daq_pb2.bandpassMonitorStartRequest(config=argin)
             )
-            print("BEFORE FIRST YIELD")
+            print(f"BEFORE FIRST YIELD WITH: {responses}")
             yield {
                 "result_code": TaskStatus.IN_PROGRESS,
                 "message": "StartBandpassMonitor command issued to gRPC stub",
             }
             print("AFTER FIRST YIELD")
-            for response in responses:
-                response_dict: dict[str, Any] = {}
-                response_dict["result_code"] = response.result_code
-                response_dict["message"] = response.message
-                response_dict["x_bandpass_plot"] = [
-                    response.x_bandpass_plot
-                    if response.HasField["x_bandpass_plot"]
-                    else None
-                ]
-                response_dict["y_bandpass_plot"] = [
-                    response.y_bandpass_plot
-                    if response.HasField["y_bandpass_plot"]
-                    else None
-                ]
-                response_dict["rms_plot"] = [
-                    response.rms_plot if response.HasField["rms_plot"] else None
-                ]
-                print(f"response_dict: {response_dict}", flush=True)
-                if response.result_code == ResultCode.OK and response.message == "Bandpass monitoring complete.":
-                    responses.cacel()
-                yield response_dict
+            try:
+                for response in responses:
+                    print(f"IN RESPONSES WITH {response}")
+                    response_dict: dict[str, Any] = {}
+                    response_dict["result_code"] = response.result_code
+                    response_dict["message"] = response.message
+                    response_dict["x_bandpass_plot"] = [
+                        response.x_bandpass_plot
+                        if response.HasField["x_bandpass_plot"]
+                        else None
+                    ]
+                    response_dict["y_bandpass_plot"] = [
+                        response.y_bandpass_plot
+                        if response.HasField["y_bandpass_plot"]
+                        else None
+                    ]
+                    response_dict["rms_plot"] = [
+                        response.rms_plot if response.HasField["rms_plot"] else None
+                    ]
+                    print(f"response_dict: {response_dict}", flush=True)
+                    if response.result_code == ResultCode.OK and response.message == "Bandpass monitoring complete.":
+                        responses.cancel()
+                    yield response_dict
+            except Exception as e:
+                print(f"..CAUGHT EXCEPTION: {e}")
 
     def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
         """Cease monitoring antenna bandpasses."""
