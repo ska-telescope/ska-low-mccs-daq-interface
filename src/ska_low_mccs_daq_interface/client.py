@@ -13,7 +13,8 @@ from typing import Any, Iterator, cast
 import grpc
 from google.protobuf.json_format import MessageToDict
 from ska_control_model import ResultCode, TaskStatus
-
+import functools
+print = functools.partial(print, flush=True)  # noqa: A001
 from .generated_code import daq_pb2, daq_pb2_grpc
 
 __all__ = ["DaqClient"]
@@ -203,7 +204,7 @@ class DaqClient:
                 ]
                 print(f"response_dict: {response_dict}", flush=True)
                 if response.result_code == ResultCode.OK and response.message == "Bandpass monitoring complete.":
-                    responses.cancel()
+                    responses.cacel()
                 yield response_dict
 
     def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
