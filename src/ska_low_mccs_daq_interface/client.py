@@ -182,7 +182,7 @@ class DaqClient:
                 "status": TaskStatus.IN_PROGRESS,
                 "message": "StartBandpassMonitor command issued to gRPC stub",
             }
-
+            print("ENTERING RESPONSES")
             for response in responses:
                 response_dict: dict[str, Any] = {}
                 response_dict["result_code"] = response.result_code
@@ -200,7 +200,7 @@ class DaqClient:
                 response_dict["rms_plot"] = [
                     response.rms_plot if response.HasField["rms_plot"] else None
                 ]
-
+                print(f"response_dict: {response_dict}", flush=True)
                 yield response_dict
 
     def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
