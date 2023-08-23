@@ -8,15 +8,17 @@
 """An implementation of a client interface for a DAQ receiver."""
 from __future__ import annotations
 
+import functools
 from typing import Any, Iterator, cast
 
 import grpc
 from google.protobuf.json_format import MessageToDict
 from ska_control_model import ResultCode, TaskStatus
-import functools
-print = functools.partial(print, flush=True)  # noqa: A001
+
 from .generated_code import daq_pb2, daq_pb2_grpc
 
+# pylint: disable = redefined-builtin
+print = functools.partial(print, flush=True)  # noqa: A001
 __all__ = ["DaqClient"]
 
 
@@ -189,27 +191,32 @@ class DaqClient:
                 for response in responses:
                     print(f"IN RESPONSES WITH {response}")
                     response_dict: dict[str, Any] = {}
+
                     response_dict["result_code"] = response.result_code
                     response_dict["message"] = response.message
                     response_dict["x_bandpass_plot"] = [
                         response.x_bandpass_plot
-                        if response.HasField["x_bandpass_plot"]
+                        if response.HasField("x_bandpass_plot")
                         else None
                     ]
                     response_dict["y_bandpass_plot"] = [
                         response.y_bandpass_plot
-                        if response.HasField["y_bandpass_plot"]
+                        if response.HasField("y_bandpass_plot")
                         else None
                     ]
                     response_dict["rms_plot"] = [
-                        response.rms_plot if response.HasField["rms_plot"] else None
+                        response.rms_plot if response.HasField("rms_plot") else None
                     ]
                     print(f"response_dict: {response_dict}", flush=True)
-                    if response.result_code == ResultCode.OK and response.message == "Bandpass monitoring complete.":
+                    if (
+                        response.result_code == ResultCode.OK
+                        and response.message == "Bandpass monitoring complete."
+                    ):
                         responses.cancel()
                     yield response_dict
-            except Exception as e:
-                print(f"..CAUGHT EXCEPTION: {e}")
+            # pylint: disable = broad-exception-caught
+            except Exception as exp:
+                print(f"..CAUGHT EXCEPTION: {exp}")
 
     def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
         """Cease monitoring antenna bandpasses."""

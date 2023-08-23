@@ -314,15 +314,9 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param request: the gRPC request
         :param context: the gRPC servicer context
         """
-        print("IN DAQ SERVER START BANDPASS")
+        print(f"IN DAQ SERVER START BANDPASS WITH {locals()}")
         #        (result_code, message, x_bandpass, y_bandpass, rms)
-        for (
-            result_code,
-            message,
-            x_bandpass,
-            y_bandpass,
-            rms,
-        ) in self._backend.start_bandpass_monitor(request.config):
+        for update in self._backend.start_bandpass_monitor(request.config):
             # response = daq_pb2.bandpassMonitorStartResponse()
             # match update:
             #     case (result_code, message):
@@ -344,7 +338,15 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
             #         response.x_bandpass_plot = x_bandpass_plot
             #         response.y_bandpass_plot = y_bandpass_plot
             #         response.rms_plot = rms_plot
-
+            print(update)
+            if isinstance(update, dict):
+                result_code = update["result_code"]
+                message = update["message"]
+                x_bandpass = None
+                y_bandpass = None
+                rms = None
+            else:
+                (result_code, message, x_bandpass, y_bandpass, rms) = update
             yield daq_pb2.bandpassMonitorStartResponse(
                 result_code=result_code,  # type: ignore[arg-type]
                 message=message,
