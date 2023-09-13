@@ -137,6 +137,7 @@ class DaqClient:
                 if response.HasField("call_info"):
                     response_dict["types"] = response.call_info.data_types_received
                     response_dict["files"] = response.call_info.files_written
+                    response_dict["extras"] = response.call_info.extra_info
 
                 yield response_dict
 
