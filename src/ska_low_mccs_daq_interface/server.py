@@ -13,7 +13,7 @@ from contextlib import contextmanager
 from typing import Any, Iterator, Protocol
 
 import grpc
-from ska_control_model import ResultCode
+from ska_control_model import ResultCode, TaskStatus
 
 from .generated_code import daq_pb2, daq_pb2_grpc
 
@@ -108,7 +108,7 @@ class DaqServerBackendProtocol(Protocol):
     def start_bandpass_monitor(
         self: DaqServerBackendProtocol,
         argin: str,
-    ) -> Iterator[tuple[ResultCode, str, str | None, str | None, str | None]]:
+    ) -> Iterator[tuple[TaskStatus, str, str | None, str | None, str | None]]:
         """
         Begin monitoring antenna bandpasses.
 
@@ -318,27 +318,6 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         print(f"IN DAQ SERVER START BANDPASS WITH {locals()}")
         #        (result_code, message, x_bandpass, y_bandpass, rms)
         for update in self._backend.start_bandpass_monitor(request.config):
-            # response = daq_pb2.bandpassMonitorStartResponse()
-            # match update:
-            #     case (result_code, message):
-            #         response.result_code = result_code
-            #         response.message = message
-            #         # response.x_bandpass_plot = None
-            #         # response.y_bandpass_plot = None
-            #         # response.rms_plot = None
-            #     case (result_code, message, x_bandpass_plot, y_bandpass_plot):
-            #         response.result_code = result_code
-            #         response.message = message
-            #         response.x_bandpass_plot = x_bandpass_plot
-            #         response.y_bandpass_plot = y_bandpass_plot
-            #         # response.rms_plot = None
-            #     case (result_code, message, x_bandpass_plot,
-            # y_bandpass_plot, rms_plot):
-            #         response.result_code = result_code
-            #         response.message = message
-            #         response.x_bandpass_plot = x_bandpass_plot
-            #         response.y_bandpass_plot = y_bandpass_plot
-            #         response.rms_plot = rms_plot
             print(update)
             if isinstance(update, dict):
                 result_code = update["result_code"]
