@@ -108,7 +108,7 @@ class DaqServerBackendProtocol(Protocol):
     def start_bandpass_monitor(
         self: DaqServerBackendProtocol,
         argin: str,
-    ) -> Iterator[tuple[TaskStatus, str, str | None, str | None, str | None]]:
+    ) -> Iterator[tuple[TaskStatus, str, bytes | None, bytes | None, bytes | None]]:
         """
         Begin monitoring antenna bandpasses.
 
