@@ -17,45 +17,45 @@ class DaqStub(object):
             channel: A grpc.Channel.
         """
         self.StartDaq = channel.unary_stream(
-            "/daq.Daq/StartDaq",
-            request_serializer=daq__pb2.startDaqRequest.SerializeToString,
-            response_deserializer=daq__pb2.startDaqResponse.FromString,
-        )
+                '/daq.Daq/StartDaq',
+                request_serializer=daq__pb2.startDaqRequest.SerializeToString,
+                response_deserializer=daq__pb2.startDaqResponse.FromString,
+                )
         self.StopDaq = channel.unary_unary(
-            "/daq.Daq/StopDaq",
-            request_serializer=daq__pb2.stopDaqRequest.SerializeToString,
-            response_deserializer=daq__pb2.commandResponse.FromString,
-        )
+                '/daq.Daq/StopDaq',
+                request_serializer=daq__pb2.stopDaqRequest.SerializeToString,
+                response_deserializer=daq__pb2.commandResponse.FromString,
+                )
         self.InitDaq = channel.unary_unary(
-            "/daq.Daq/InitDaq",
-            request_serializer=daq__pb2.configDaqRequest.SerializeToString,
-            response_deserializer=daq__pb2.commandResponse.FromString,
-        )
+                '/daq.Daq/InitDaq',
+                request_serializer=daq__pb2.configDaqRequest.SerializeToString,
+                response_deserializer=daq__pb2.commandResponse.FromString,
+                )
         self.ConfigureDaq = channel.unary_unary(
-            "/daq.Daq/ConfigureDaq",
-            request_serializer=daq__pb2.configDaqRequest.SerializeToString,
-            response_deserializer=daq__pb2.commandResponse.FromString,
-        )
+                '/daq.Daq/ConfigureDaq',
+                request_serializer=daq__pb2.configDaqRequest.SerializeToString,
+                response_deserializer=daq__pb2.commandResponse.FromString,
+                )
         self.GetConfiguration = channel.unary_unary(
-            "/daq.Daq/GetConfiguration",
-            request_serializer=daq__pb2.getConfigRequest.SerializeToString,
-            response_deserializer=daq__pb2.ConfigurationResponse.FromString,
-        )
+                '/daq.Daq/GetConfiguration',
+                request_serializer=daq__pb2.getConfigRequest.SerializeToString,
+                response_deserializer=daq__pb2.ConfigurationResponse.FromString,
+                )
         self.DaqStatus = channel.unary_unary(
-            "/daq.Daq/DaqStatus",
-            request_serializer=daq__pb2.daqStatusRequest.SerializeToString,
-            response_deserializer=daq__pb2.daqStatusResponse.FromString,
-        )
+                '/daq.Daq/DaqStatus',
+                request_serializer=daq__pb2.daqStatusRequest.SerializeToString,
+                response_deserializer=daq__pb2.daqStatusResponse.FromString,
+                )
         self.BandpassMonitorStart = channel.unary_stream(
-            "/daq.Daq/BandpassMonitorStart",
-            request_serializer=daq__pb2.bandpassMonitorStartRequest.SerializeToString,
-            response_deserializer=daq__pb2.bandpassMonitorStartResponse.FromString,
-        )
+                '/daq.Daq/BandpassMonitorStart',
+                request_serializer=daq__pb2.bandpassMonitorStartRequest.SerializeToString,
+                response_deserializer=daq__pb2.bandpassMonitorStartResponse.FromString,
+                )
         self.BandpassMonitorStop = channel.unary_unary(
-            "/daq.Daq/BandpassMonitorStop",
-            request_serializer=daq__pb2.bandpassMonitorStopRequest.SerializeToString,
-            response_deserializer=daq__pb2.commandResponse.FromString,
-        )
+                '/daq.Daq/BandpassMonitorStop',
+                request_serializer=daq__pb2.bandpassMonitorStopRequest.SerializeToString,
+                response_deserializer=daq__pb2.commandResponse.FromString,
+                )
 
 
 class DaqServicer(object):
@@ -78,8 +78,8 @@ class DaqServicer(object):
         information purpose only.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def StopDaq(self, request, context):
         """
@@ -93,8 +93,8 @@ class DaqServicer(object):
         information purpose only.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def InitDaq(self, request, context):
         """
@@ -107,8 +107,8 @@ class DaqServicer(object):
         ;return; a commandResponse object containing `result_code` and `message`
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def ConfigureDaq(self, request, context):
         """
@@ -122,8 +122,8 @@ class DaqServicer(object):
         information purpose only.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def GetConfiguration(self, request, context):
         """
@@ -138,8 +138,8 @@ class DaqServicer(object):
         >>> dict = json.loads(jstr)
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def DaqStatus(self, request, context):
         """
@@ -155,22 +155,22 @@ class DaqServicer(object):
         ;return; A json string containing the status of this DaqReceiver.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def BandpassMonitorStart(self, request, context):
         """
         Begin monitoring antenna bandpasses.
 
         ;return; A streamed response containing:
-        result code,
-        message,
+        result code, 
+        message, 
         bandpass,
         rms plot [Optional],
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def BandpassMonitorStop(self, request, context):
         """
@@ -181,293 +181,196 @@ class DaqServicer(object):
         information purposes only.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
 
 def add_DaqServicer_to_server(servicer, server):
     rpc_method_handlers = {
-        "StartDaq": grpc.unary_stream_rpc_method_handler(
-            servicer.StartDaq,
-            request_deserializer=daq__pb2.startDaqRequest.FromString,
-            response_serializer=daq__pb2.startDaqResponse.SerializeToString,
-        ),
-        "StopDaq": grpc.unary_unary_rpc_method_handler(
-            servicer.StopDaq,
-            request_deserializer=daq__pb2.stopDaqRequest.FromString,
-            response_serializer=daq__pb2.commandResponse.SerializeToString,
-        ),
-        "InitDaq": grpc.unary_unary_rpc_method_handler(
-            servicer.InitDaq,
-            request_deserializer=daq__pb2.configDaqRequest.FromString,
-            response_serializer=daq__pb2.commandResponse.SerializeToString,
-        ),
-        "ConfigureDaq": grpc.unary_unary_rpc_method_handler(
-            servicer.ConfigureDaq,
-            request_deserializer=daq__pb2.configDaqRequest.FromString,
-            response_serializer=daq__pb2.commandResponse.SerializeToString,
-        ),
-        "GetConfiguration": grpc.unary_unary_rpc_method_handler(
-            servicer.GetConfiguration,
-            request_deserializer=daq__pb2.getConfigRequest.FromString,
-            response_serializer=daq__pb2.ConfigurationResponse.SerializeToString,
-        ),
-        "DaqStatus": grpc.unary_unary_rpc_method_handler(
-            servicer.DaqStatus,
-            request_deserializer=daq__pb2.daqStatusRequest.FromString,
-            response_serializer=daq__pb2.daqStatusResponse.SerializeToString,
-        ),
-        "BandpassMonitorStart": grpc.unary_stream_rpc_method_handler(
-            servicer.BandpassMonitorStart,
-            request_deserializer=daq__pb2.bandpassMonitorStartRequest.FromString,
-            response_serializer=daq__pb2.bandpassMonitorStartResponse.SerializeToString,
-        ),
-        "BandpassMonitorStop": grpc.unary_unary_rpc_method_handler(
-            servicer.BandpassMonitorStop,
-            request_deserializer=daq__pb2.bandpassMonitorStopRequest.FromString,
-            response_serializer=daq__pb2.commandResponse.SerializeToString,
-        ),
+            'StartDaq': grpc.unary_stream_rpc_method_handler(
+                    servicer.StartDaq,
+                    request_deserializer=daq__pb2.startDaqRequest.FromString,
+                    response_serializer=daq__pb2.startDaqResponse.SerializeToString,
+            ),
+            'StopDaq': grpc.unary_unary_rpc_method_handler(
+                    servicer.StopDaq,
+                    request_deserializer=daq__pb2.stopDaqRequest.FromString,
+                    response_serializer=daq__pb2.commandResponse.SerializeToString,
+            ),
+            'InitDaq': grpc.unary_unary_rpc_method_handler(
+                    servicer.InitDaq,
+                    request_deserializer=daq__pb2.configDaqRequest.FromString,
+                    response_serializer=daq__pb2.commandResponse.SerializeToString,
+            ),
+            'ConfigureDaq': grpc.unary_unary_rpc_method_handler(
+                    servicer.ConfigureDaq,
+                    request_deserializer=daq__pb2.configDaqRequest.FromString,
+                    response_serializer=daq__pb2.commandResponse.SerializeToString,
+            ),
+            'GetConfiguration': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetConfiguration,
+                    request_deserializer=daq__pb2.getConfigRequest.FromString,
+                    response_serializer=daq__pb2.ConfigurationResponse.SerializeToString,
+            ),
+            'DaqStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.DaqStatus,
+                    request_deserializer=daq__pb2.daqStatusRequest.FromString,
+                    response_serializer=daq__pb2.daqStatusResponse.SerializeToString,
+            ),
+            'BandpassMonitorStart': grpc.unary_stream_rpc_method_handler(
+                    servicer.BandpassMonitorStart,
+                    request_deserializer=daq__pb2.bandpassMonitorStartRequest.FromString,
+                    response_serializer=daq__pb2.bandpassMonitorStartResponse.SerializeToString,
+            ),
+            'BandpassMonitorStop': grpc.unary_unary_rpc_method_handler(
+                    servicer.BandpassMonitorStop,
+                    request_deserializer=daq__pb2.bandpassMonitorStopRequest.FromString,
+                    response_serializer=daq__pb2.commandResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-        "daq.Daq", rpc_method_handlers
-    )
+            'daq.Daq', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
-# This class is part of an EXPERIMENTAL API.
+ # This class is part of an EXPERIMENTAL API.
 class Daq(object):
     """
     A class holding the DAQ service implementation.
     """
 
     @staticmethod
-    def StartDaq(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_stream(
-            request,
+    def StartDaq(request,
             target,
-            "/daq.Daq/StartDaq",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/daq.Daq/StartDaq',
             daq__pb2.startDaqRequest.SerializeToString,
             daq__pb2.startDaqResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def StopDaq(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def StopDaq(request,
             target,
-            "/daq.Daq/StopDaq",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/daq.Daq/StopDaq',
             daq__pb2.stopDaqRequest.SerializeToString,
             daq__pb2.commandResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def InitDaq(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def InitDaq(request,
             target,
-            "/daq.Daq/InitDaq",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/daq.Daq/InitDaq',
             daq__pb2.configDaqRequest.SerializeToString,
             daq__pb2.commandResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def ConfigureDaq(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def ConfigureDaq(request,
             target,
-            "/daq.Daq/ConfigureDaq",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/daq.Daq/ConfigureDaq',
             daq__pb2.configDaqRequest.SerializeToString,
             daq__pb2.commandResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetConfiguration(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def GetConfiguration(request,
             target,
-            "/daq.Daq/GetConfiguration",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/daq.Daq/GetConfiguration',
             daq__pb2.getConfigRequest.SerializeToString,
             daq__pb2.ConfigurationResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def DaqStatus(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def DaqStatus(request,
             target,
-            "/daq.Daq/DaqStatus",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/daq.Daq/DaqStatus',
             daq__pb2.daqStatusRequest.SerializeToString,
             daq__pb2.daqStatusResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def BandpassMonitorStart(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_stream(
-            request,
+    def BandpassMonitorStart(request,
             target,
-            "/daq.Daq/BandpassMonitorStart",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/daq.Daq/BandpassMonitorStart',
             daq__pb2.bandpassMonitorStartRequest.SerializeToString,
             daq__pb2.bandpassMonitorStartResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def BandpassMonitorStop(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def BandpassMonitorStop(request,
             target,
-            "/daq.Daq/BandpassMonitorStop",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/daq.Daq/BandpassMonitorStop',
             daq__pb2.bandpassMonitorStopRequest.SerializeToString,
             daq__pb2.commandResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
