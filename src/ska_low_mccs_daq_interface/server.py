@@ -315,10 +315,7 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param request: the gRPC request
         :param context: the gRPC servicer context
         """
-        print(f"IN DAQ SERVER START BANDPASS WITH {locals()}")
-        #        (result_code, message, x_bandpass, y_bandpass, rms)
         for update in self._backend.start_bandpass_monitor(request.config):
-            print(f"update: {update}")
             if isinstance(update, dict):
                 result_code = update["result_code"]
                 message = update["message"]
@@ -328,11 +325,6 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
             else:
                 (result_code, message, x_bandpass, y_bandpass, rms) = update
 
-            print(f"x_bandpass: {x_bandpass!r}")
-            print(f"y_bandpass: {y_bandpass!r}")
-            print(f"rms: {rms!r}")
-            # TODO: grpc_message:"Exception iterating responses: \'utf-8\'
-            # codec can\'t decode byte 0x8b in position 33
             yield daq_pb2.bandpassMonitorStartResponse(
                 result_code=result_code,  # type: ignore[arg-type]
                 message=message,
@@ -352,9 +344,7 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         :param request: the gRPC request
         :param context: the gRPC servicer context
         """
-        print("IN DAQ SERVER STOP BANDPASS")
         (result_code, message) = self._backend.stop_bandpass_monitor()
-        print(f"AFTER DAQ SERVER STOP BANDPASS: {(result_code, message)}")
         return daq_pb2.commandResponse(
             result_code=result_code,  # type: ignore[arg-type]
             message=message,

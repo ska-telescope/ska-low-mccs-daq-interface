@@ -8,7 +8,6 @@
 """An implementation of a client interface for a DAQ receiver."""
 from __future__ import annotations
 
-import functools
 from typing import Any, Iterator, cast
 
 import grpc
@@ -17,8 +16,6 @@ from ska_control_model import ResultCode, TaskStatus
 
 from .generated_code import daq_pb2, daq_pb2_grpc
 
-# pylint: disable = redefined-builtin
-print = functools.partial(print, flush=True)  # noqa: A001
 __all__ = ["DaqClient"]
 
 
@@ -176,56 +173,43 @@ class DaqClient:
             is called.
             Default: False.
         """
-        print(f"IN DAQ CLIENT START BANDPASS WITH: {locals()}")
         with grpc.insecure_channel(self._grpc_channel) as channel:
             stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
             responses = stub.BandpassMonitorStart(
                 daq_pb2.bandpassMonitorStartRequest(config=argin)
             )
-            print(f"BEFORE FIRST YIELD WITH: {responses}")
             yield {
                 "result_code": TaskStatus.IN_PROGRESS,
                 "message": "StartBandpassMonitor command issued to gRPC stub",
             }
-            print("AFTER FIRST YIELD")
-            try:
-                for response in responses:
-                    print(f"IN RESPONSES WITH {response}")
-                    response_dict: dict[str, Any] = {}
+            for response in responses:
+                response_dict: dict[str, Any] = {}
 
-                    response_dict["result_code"] = response.result_code
-                    response_dict["message"] = response.message
-                    response_dict["x_bandpass_plot"] = [
-                        response.x_bandpass_plot
-                        if response.HasField("x_bandpass_plot")
-                        else None
-                    ]
-                    response_dict["y_bandpass_plot"] = [
-                        response.y_bandpass_plot
-                        if response.HasField("y_bandpass_plot")
-                        else None
-                    ]
-                    response_dict["rms_plot"] = [
-                        response.rms_plot if response.HasField("rms_plot") else None
-                    ]
-                    print(f"response_dict: {response_dict}", flush=True)
-                    if (
-                        response.result_code == ResultCode.OK
-                        and response.message == "Bandpass monitoring complete."
-                    ):
-                        responses.cancel()
-                    yield response_dict
-            # pylint: disable = broad-exception-caught
-            except Exception as exp:
-                print(f"..CAUGHT EXCEPTION: {exp}")
+                response_dict["result_code"] = response.result_code
+                response_dict["message"] = response.message
+                response_dict["x_bandpass_plot"] = [
+                    response.x_bandpass_plot
+                    if response.HasField("x_bandpass_plot")
+                    else None
+                ]
+                response_dict["y_bandpass_plot"] = [
+                    response.y_bandpass_plot
+                    if response.HasField("y_bandpass_plot")
+                    else None
+                ]
+                response_dict["rms_plot"] = [
+                    response.rms_plot if response.HasField("rms_plot") else None
+                ]
+                if (
+                    response.result_code == ResultCode.OK
+                    and response.message == "Bandpass monitoring complete."
+                ):
+                    responses.cancel()
+                yield response_dict
 
     def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
         """Cease monitoring antenna bandpasses."""
-        print("IN DAQ CLIENT STOP BANDPASS")
         with grpc.insecure_channel(self._grpc_channel) as channel:
             stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
             response = stub.BandpassMonitorStop(daq_pb2.bandpassMonitorStopRequest())
-        print(
-            f"AFTER DAQCLIENT STOP BANDPASS: {(response.result_code,response.message)}"
-        )
         return (response.result_code, response.message)
