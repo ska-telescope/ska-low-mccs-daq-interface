@@ -108,7 +108,7 @@ class DaqServerBackendProtocol(Protocol):
     def start_bandpass_monitor(
         self: DaqServerBackendProtocol,
         argin: str,
-    ) -> Iterator[tuple[TaskStatus, str, bytes | None, bytes | None, bytes | None]]:
+    ) -> Iterator[tuple[TaskStatus, str, str | None, str | None, str | None]]:
         """
         Begin monitoring antenna bandpasses.
 
@@ -331,7 +331,8 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
             print(f"x_bandpass: {x_bandpass!r}")
             print(f"y_bandpass: {y_bandpass!r}")
             print(f"rms: {rms!r}")
-            # TODO: grpc_message:"Exception iterating responses: \'utf-8\' codec can\'t decode byte 0x8b in position 33
+            # TODO: grpc_message:"Exception iterating responses: \'utf-8\'
+            # codec can\'t decode byte 0x8b in position 33
             yield daq_pb2.bandpassMonitorStartResponse(
                 result_code=result_code,  # type: ignore[arg-type]
                 message=message,
