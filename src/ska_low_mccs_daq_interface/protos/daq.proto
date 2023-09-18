@@ -230,9 +230,9 @@ message bandpassMonitorStartRequest {
 message bandpassMonitorStartResponse {
     ResultCode result_code = 1;
     string message = 2;
-    optional bytes x_bandpass_plot = 3;
-    optional bytes y_bandpass_plot = 4;
-    optional bytes rms_plot = 5;
+    optional string x_bandpass_plot = 3;
+    optional string y_bandpass_plot = 4;
+    optional string rms_plot = 5;
 }
 
 message bandpassMonitorStopRequest {
