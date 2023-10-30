@@ -221,7 +221,6 @@ message bandpassMonitorStartRequest {
     string config=1;
     /*
     CURRENT MEMBERS
-    string config.station_config_path
     string config.plot_directory
     bool config.monitor_rms
     bool config.auto_handle_daq

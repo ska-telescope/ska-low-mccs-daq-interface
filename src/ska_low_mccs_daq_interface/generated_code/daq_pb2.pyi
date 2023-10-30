@@ -20,10 +20,7 @@ class _ResultCode:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
 
-class _ResultCodeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_ResultCode.ValueType],
-    builtins.type,
-):
+class _ResultCodeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_ResultCode.ValueType], builtins.type):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     OK: _ResultCode.ValueType  # 0
     STARTED: _ResultCode.ValueType  # 1
@@ -54,12 +51,7 @@ class CallState(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _StateEnumTypeWrapper(
-        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[
-            CallState._State.ValueType
-        ],
-        builtins.type,
-    ):  # noqa: F821
+    class _StateEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[CallState._State.ValueType], builtins.type):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         STOPPED: CallState._State.ValueType  # 0
         RECEIVING: CallState._State.ValueType  # 1
@@ -77,9 +69,7 @@ class CallState(google.protobuf.message.Message):
         *,
         state: global___CallState.State.ValueType = ...,
     ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["state", b"state"]
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["state", b"state"]) -> None: ...
 
 global___CallState = CallState
 
@@ -100,17 +90,7 @@ class CallInfo(google.protobuf.message.Message):
         files_written: builtins.str = ...,
         extra_info: builtins.str = ...,
     ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "data_types_received",
-            b"data_types_received",
-            "extra_info",
-            b"extra_info",
-            "files_written",
-            b"files_written",
-        ],
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["data_types_received", b"data_types_received", "extra_info", b"extra_info", "files_written", b"files_written"]) -> None: ...
 
 global___CallInfo = CallInfo
 
@@ -125,9 +105,7 @@ class startDaqRequest(google.protobuf.message.Message):
         *,
         modes_to_start: builtins.str = ...,
     ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["modes_to_start", b"modes_to_start"]
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["modes_to_start", b"modes_to_start"]) -> None: ...
 
 global___startDaqRequest = startDaqRequest
 
@@ -147,34 +125,9 @@ class startDaqResponse(google.protobuf.message.Message):
         call_state: global___CallState | None = ...,
         call_info: global___CallInfo | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "call_info",
-            b"call_info",
-            "call_state",
-            b"call_state",
-            "start_daq_response",
-            b"start_daq_response",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "call_info",
-            b"call_info",
-            "call_state",
-            b"call_state",
-            "start_daq_response",
-            b"start_daq_response",
-        ],
-    ) -> None: ...
-    def WhichOneof(
-        self,
-        oneof_group: typing_extensions.Literal[
-            "start_daq_response", b"start_daq_response"
-        ],
-    ) -> typing_extensions.Literal["call_state", "call_info"] | None: ...
+    def HasField(self, field_name: typing_extensions.Literal["call_info", b"call_info", "call_state", b"call_state", "start_daq_response", b"start_daq_response"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["call_info", b"call_info", "call_state", b"call_state", "start_daq_response", b"start_daq_response"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["start_daq_response", b"start_daq_response"]) -> typing_extensions.Literal["call_state", "call_info"] | None: ...
 
 global___startDaqResponse = startDaqResponse
 
@@ -211,9 +164,7 @@ class getConfigResponse(google.protobuf.message.Message):
         *,
         config: builtins.str = ...,
     ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["config", b"config"]
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["config", b"config"]) -> None: ...
 
 global___getConfigResponse = getConfigResponse
 
@@ -238,9 +189,7 @@ class daqStatusResponse(google.protobuf.message.Message):
         *,
         status: builtins.str = ...,
     ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["status", b"status"]
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["status", b"status"]) -> None: ...
 
 global___daqStatusResponse = daqStatusResponse
 
@@ -258,12 +207,7 @@ class commandResponse(google.protobuf.message.Message):
         result_code: global___ResultCode.ValueType = ...,
         message: builtins.str = ...,
     ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "message", b"message", "result_code", b"result_code"
-        ],
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["message", b"message", "result_code", b"result_code"]) -> None: ...
 
 global___commandResponse = commandResponse
 
@@ -278,9 +222,7 @@ class configDaqRequest(google.protobuf.message.Message):
         *,
         config: builtins.str = ...,
     ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["config", b"config"]
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["config", b"config"]) -> None: ...
 
 global___configDaqRequest = configDaqRequest
 
@@ -411,85 +353,8 @@ class ConfigurationResponse(google.protobuf.message.Message):
         station_config: global___empty | None = ...,
         max_filesize: global___empty | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "max_filesize", b"max_filesize", "station_config", b"station_config"
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "acquisition_duration",
-            b"acquisition_duration",
-            "acquisition_start_time",
-            b"acquisition_start_time",
-            "append_integrated",
-            b"append_integrated",
-            "continuous_period",
-            b"continuous_period",
-            "description",
-            b"description",
-            "directory",
-            b"directory",
-            "logging",
-            b"logging",
-            "max_filesize",
-            b"max_filesize",
-            "nof_antennas",
-            b"nof_antennas",
-            "nof_beam_channels",
-            b"nof_beam_channels",
-            "nof_beam_samples",
-            b"nof_beam_samples",
-            "nof_beams",
-            b"nof_beams",
-            "nof_channel_samples",
-            b"nof_channel_samples",
-            "nof_channels",
-            b"nof_channels",
-            "nof_correlator_channels",
-            b"nof_correlator_channels",
-            "nof_correlator_samples",
-            b"nof_correlator_samples",
-            "nof_polarisations",
-            b"nof_polarisations",
-            "nof_raw_samples",
-            b"nof_raw_samples",
-            "nof_station_samples",
-            b"nof_station_samples",
-            "nof_tiles",
-            b"nof_tiles",
-            "observation_metadata",
-            b"observation_metadata",
-            "oversampling_factor",
-            b"oversampling_factor",
-            "raw_rms_threshold",
-            b"raw_rms_threshold",
-            "receiver_frame_size",
-            b"receiver_frame_size",
-            "receiver_frames_per_block",
-            b"receiver_frames_per_block",
-            "receiver_interface",
-            b"receiver_interface",
-            "receiver_ip",
-            b"receiver_ip",
-            "receiver_nof_blocks",
-            b"receiver_nof_blocks",
-            "receiver_nof_threads",
-            b"receiver_nof_threads",
-            "receiver_ports",
-            b"receiver_ports",
-            "sampling_rate",
-            b"sampling_rate",
-            "sampling_time",
-            b"sampling_time",
-            "station_config",
-            b"station_config",
-            "write_to_disk",
-            b"write_to_disk",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["max_filesize", b"max_filesize", "station_config", b"station_config"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["acquisition_duration", b"acquisition_duration", "acquisition_start_time", b"acquisition_start_time", "append_integrated", b"append_integrated", "continuous_period", b"continuous_period", "description", b"description", "directory", b"directory", "logging", b"logging", "max_filesize", b"max_filesize", "nof_antennas", b"nof_antennas", "nof_beam_channels", b"nof_beam_channels", "nof_beam_samples", b"nof_beam_samples", "nof_beams", b"nof_beams", "nof_channel_samples", b"nof_channel_samples", "nof_channels", b"nof_channels", "nof_correlator_channels", b"nof_correlator_channels", "nof_correlator_samples", b"nof_correlator_samples", "nof_polarisations", b"nof_polarisations", "nof_raw_samples", b"nof_raw_samples", "nof_station_samples", b"nof_station_samples", "nof_tiles", b"nof_tiles", "observation_metadata", b"observation_metadata", "oversampling_factor", b"oversampling_factor", "raw_rms_threshold", b"raw_rms_threshold", "receiver_frame_size", b"receiver_frame_size", "receiver_frames_per_block", b"receiver_frames_per_block", "receiver_interface", b"receiver_interface", "receiver_ip", b"receiver_ip", "receiver_nof_blocks", b"receiver_nof_blocks", "receiver_nof_threads", b"receiver_nof_threads", "receiver_ports", b"receiver_ports", "sampling_rate", b"sampling_rate", "sampling_time", b"sampling_time", "station_config", b"station_config", "write_to_disk", b"write_to_disk"]) -> None: ...
 
 global___ConfigurationResponse = ConfigurationResponse
 
@@ -501,7 +366,6 @@ class bandpassMonitorStartRequest(google.protobuf.message.Message):
     config: builtins.str
     """
     CURRENT MEMBERS
-    string config.station_config_path
     string config.plot_directory
     bool config.monitor_rms
     bool config.auto_handle_daq
@@ -511,9 +375,7 @@ class bandpassMonitorStartRequest(google.protobuf.message.Message):
         *,
         config: builtins.str = ...,
     ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["config", b"config"]
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["config", b"config"]) -> None: ...
 
 global___bandpassMonitorStartRequest = bandpassMonitorStartRequest
 
@@ -540,58 +402,14 @@ class bandpassMonitorStartResponse(google.protobuf.message.Message):
         y_bandpass_plot: builtins.str | None = ...,
         rms_plot: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_rms_plot",
-            b"_rms_plot",
-            "_x_bandpass_plot",
-            b"_x_bandpass_plot",
-            "_y_bandpass_plot",
-            b"_y_bandpass_plot",
-            "rms_plot",
-            b"rms_plot",
-            "x_bandpass_plot",
-            b"x_bandpass_plot",
-            "y_bandpass_plot",
-            b"y_bandpass_plot",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_rms_plot",
-            b"_rms_plot",
-            "_x_bandpass_plot",
-            b"_x_bandpass_plot",
-            "_y_bandpass_plot",
-            b"_y_bandpass_plot",
-            "message",
-            b"message",
-            "result_code",
-            b"result_code",
-            "rms_plot",
-            b"rms_plot",
-            "x_bandpass_plot",
-            b"x_bandpass_plot",
-            "y_bandpass_plot",
-            b"y_bandpass_plot",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_rms_plot", b"_rms_plot", "_x_bandpass_plot", b"_x_bandpass_plot", "_y_bandpass_plot", b"_y_bandpass_plot", "rms_plot", b"rms_plot", "x_bandpass_plot", b"x_bandpass_plot", "y_bandpass_plot", b"y_bandpass_plot"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_rms_plot", b"_rms_plot", "_x_bandpass_plot", b"_x_bandpass_plot", "_y_bandpass_plot", b"_y_bandpass_plot", "message", b"message", "result_code", b"result_code", "rms_plot", b"rms_plot", "x_bandpass_plot", b"x_bandpass_plot", "y_bandpass_plot", b"y_bandpass_plot"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_rms_plot", b"_rms_plot"]
-    ) -> typing_extensions.Literal["rms_plot"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_rms_plot", b"_rms_plot"]) -> typing_extensions.Literal["rms_plot"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self,
-        oneof_group: typing_extensions.Literal["_x_bandpass_plot", b"_x_bandpass_plot"],
-    ) -> typing_extensions.Literal["x_bandpass_plot"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_x_bandpass_plot", b"_x_bandpass_plot"]) -> typing_extensions.Literal["x_bandpass_plot"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self,
-        oneof_group: typing_extensions.Literal["_y_bandpass_plot", b"_y_bandpass_plot"],
-    ) -> typing_extensions.Literal["y_bandpass_plot"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_y_bandpass_plot", b"_y_bandpass_plot"]) -> typing_extensions.Literal["y_bandpass_plot"] | None: ...
 
 global___bandpassMonitorStartResponse = bandpassMonitorStartResponse
 
