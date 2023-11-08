@@ -10,4 +10,4 @@ def test_content() -> None:
 
     :param version: the version fixture
     """
-    assert ska_low_mccs_daq_interface.__version__ == "0.1.1"
+    assert ska_low_mccs_daq_interface.__version__ == "0.2.0"

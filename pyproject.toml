@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ska_low_mccs_daq_interface"
-version = "0.1.1"
+version = "0.2.0"
 description = "SKA Low MCCS DAQ Interface repository specifies the client-server interface between the DAQ and its monitoring and control component."
 authors = ["Drew Devereux <drew.devereux@skao.int>"]
 license="BSD-3-Clause"
