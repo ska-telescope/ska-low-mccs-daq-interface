@@ -46,6 +46,16 @@ class DaqStub(object):
             request_serializer=daq__pb2.daqStatusRequest.SerializeToString,
             response_deserializer=daq__pb2.daqStatusResponse.FromString,
         )
+        self.BandpassMonitorStart = channel.unary_stream(
+            "/daq.Daq/BandpassMonitorStart",
+            request_serializer=daq__pb2.bandpassMonitorStartRequest.SerializeToString,
+            response_deserializer=daq__pb2.bandpassMonitorStartResponse.FromString,
+        )
+        self.BandpassMonitorStop = channel.unary_unary(
+            "/daq.Daq/BandpassMonitorStop",
+            request_serializer=daq__pb2.bandpassMonitorStopRequest.SerializeToString,
+            response_deserializer=daq__pb2.commandResponse.FromString,
+        )
 
 
 class DaqServicer(object):
@@ -148,6 +158,32 @@ class DaqServicer(object):
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
+    def BandpassMonitorStart(self, request, context):
+        """
+        Begin monitoring antenna bandpasses.
+
+        ;return; A streamed response containing:
+        result code,
+        message,
+        bandpass,
+        rms plot [Optional],
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
+    def BandpassMonitorStop(self, request, context):
+        """
+        Stop monitoring antenna bandpasses.
+
+        ;return; A tuple containing a return code and a string
+        message indicating status. The message is for
+        information purposes only.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
+
 
 def add_DaqServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -180,6 +216,16 @@ def add_DaqServicer_to_server(servicer, server):
             servicer.DaqStatus,
             request_deserializer=daq__pb2.daqStatusRequest.FromString,
             response_serializer=daq__pb2.daqStatusResponse.SerializeToString,
+        ),
+        "BandpassMonitorStart": grpc.unary_stream_rpc_method_handler(
+            servicer.BandpassMonitorStart,
+            request_deserializer=daq__pb2.bandpassMonitorStartRequest.FromString,
+            response_serializer=daq__pb2.bandpassMonitorStartResponse.SerializeToString,
+        ),
+        "BandpassMonitorStop": grpc.unary_unary_rpc_method_handler(
+            servicer.BandpassMonitorStop,
+            request_deserializer=daq__pb2.bandpassMonitorStopRequest.FromString,
+            response_serializer=daq__pb2.commandResponse.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -358,6 +404,64 @@ class Daq(object):
             "/daq.Daq/DaqStatus",
             daq__pb2.daqStatusRequest.SerializeToString,
             daq__pb2.daqStatusResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
+
+    @staticmethod
+    def BandpassMonitorStart(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            "/daq.Daq/BandpassMonitorStart",
+            daq__pb2.bandpassMonitorStartRequest.SerializeToString,
+            daq__pb2.bandpassMonitorStartResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
+
+    @staticmethod
+    def BandpassMonitorStop(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            "/daq.Daq/BandpassMonitorStop",
+            daq__pb2.bandpassMonitorStopRequest.SerializeToString,
+            daq__pb2.commandResponse.FromString,
             options,
             channel_credentials,
             insecure,

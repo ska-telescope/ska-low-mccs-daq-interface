@@ -76,6 +76,26 @@ service Daq{
 
         ;return; A json string containing the status of this DaqReceiver.*/
     }
+    rpc BandpassMonitorStart(bandpassMonitorStartRequest) returns (stream bandpassMonitorStartResponse){
+        /*
+        Begin monitoring antenna bandpasses.
+
+        ;return; A streamed response containing:
+            result code, 
+            message, 
+            bandpass,
+            rms plot [Optional],
+        */
+    }
+    rpc BandpassMonitorStop(bandpassMonitorStopRequest) returns (commandResponse){
+        /*
+        Stop monitoring antenna bandpasses.
+
+        ;return; A tuple containing a return code and a string
+            message indicating status. The message is for
+            information purposes only.
+        */
+    }
 }
 
 message CallState {
@@ -195,6 +215,27 @@ message ConfigurationResponse {
     empty station_config = 33;
     empty max_filesize = 34;
     
+}
+
+message bandpassMonitorStartRequest {
+    string config=1;
+    /*
+    CURRENT MEMBERS
+    string config.plot_directory
+    bool config.monitor_rms
+    bool config.auto_handle_daq
+    */
+}
+message bandpassMonitorStartResponse {
+    ResultCode result_code = 1;
+    string message = 2;
+    optional string x_bandpass_plot = 3;
+    optional string y_bandpass_plot = 4;
+    optional string rms_plot = 5;
+}
+
+message bandpassMonitorStopRequest {
+// Empty
 }
 
 message empty {}

@@ -148,3 +148,68 @@ class DaqClient:
             stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
             response = stub.StopDaq(daq_pb2.stopDaqRequest())
         return (response.result_code, response.message)
+
+    def start_bandpass_monitor(
+        self: DaqClient,
+        argin: str,
+    ) -> Iterator[dict[str, Any]]:
+        """
+        Begin monitoring antenna bandpasses.
+
+        :param argin: A json string with keywords
+            - station_config_path
+            Path to a station configuration file.
+            - plot_directory
+            Directory in which to store bandpass plots.
+            - monitor_rms
+            Whether or not to additionally produce RMS plots.
+            Default: False.
+            - auto_handle_daq
+            Whether DAQ should be automatically reconfigured,
+            started and stopped without user action if necessary.
+            This set to False means we expect DAQ to already
+            be properly configured and listening for traffic
+            and DAQ will not be stopped when `StopBandpassMonitor`
+            is called.
+            Default: False.
+        """
+        with grpc.insecure_channel(self._grpc_channel) as channel:
+            stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
+            responses = stub.BandpassMonitorStart(
+                daq_pb2.bandpassMonitorStartRequest(config=argin)
+            )
+            yield {
+                "result_code": TaskStatus.IN_PROGRESS,
+                "message": "StartBandpassMonitor command issued to gRPC stub",
+            }
+            for response in responses:
+                response_dict: dict[str, Any] = {}
+
+                response_dict["result_code"] = response.result_code
+                response_dict["message"] = response.message
+                response_dict["x_bandpass_plot"] = [
+                    response.x_bandpass_plot
+                    if response.HasField("x_bandpass_plot")
+                    else None
+                ]
+                response_dict["y_bandpass_plot"] = [
+                    response.y_bandpass_plot
+                    if response.HasField("y_bandpass_plot")
+                    else None
+                ]
+                response_dict["rms_plot"] = [
+                    response.rms_plot if response.HasField("rms_plot") else None
+                ]
+                if (
+                    response.result_code == ResultCode.OK
+                    and response.message == "Bandpass monitoring complete."
+                ):
+                    responses.cancel()
+                yield response_dict
+
+    def stop_bandpass_monitor(self: DaqClient) -> tuple[ResultCode, str]:
+        """Cease monitoring antenna bandpasses."""
+        with grpc.insecure_channel(self._grpc_channel) as channel:
+            stub = daq_pb2_grpc.DaqStub(channel)  # type: ignore[no-untyped-call]
+            response = stub.BandpassMonitorStop(daq_pb2.bandpassMonitorStopRequest())
+        return (response.result_code, response.message)

@@ -167,3 +167,71 @@ def test_stop_daq(daq_client: DaqClient, mock_backend: unittest.mock.Mock) -> No
     response = daq_client.stop_daq()
     assert response == expected_return
     mock_backend.stop.assert_called_once_with()
+
+
+def test_start_bandpass_monitor(
+    daq_client: DaqClient, mock_backend: unittest.mock.Mock
+) -> None:
+    """
+    Test that ``start_bandpass_monitor`` results in the expected backend call.
+
+    :param daq_client: the DAQ client object
+    :param mock_backend: a mock backend for the DAQ server.
+    """
+    expected_return_1 = {
+        "result_code": TaskStatus.IN_PROGRESS,
+        "message": "StartBandpassMonitor command issued to gRPC stub",
+    }
+    expected_return_2 = {
+        "result_code": ResultCode.OK,
+        "message": "Bandpass monitor active",
+        "x_bandpass_plot": [None],
+        "y_bandpass_plot": [None],
+        "rms_plot": [None],
+    }
+    expected_return_3 = {
+        "result_code": ResultCode.OK,
+        "message": "Bandpass monitoring complete.",
+        "x_bandpass_plot": [None],
+        "y_bandpass_plot": [None],
+        "rms_plot": [None],
+    }
+    # expected_return_1 comes from the DaqClient. 2 and 3 are mocked from daq_handler.
+    mock_backend.start_bandpass_monitor.return_value = iter(
+        [expected_return_2, expected_return_3]
+    )
+    mock_backend.stop_bandpass_monitor.return_value = (
+        ResultCode.OK,
+        "Bandpass monitor stopping.",
+    )
+
+    responses = daq_client.start_bandpass_monitor("configuration_string")
+
+    assert next(responses) == expected_return_1
+    assert next(responses) == expected_return_2
+    assert (
+        ResultCode.OK,
+        "Bandpass monitor stopping.",
+    ) == daq_client.stop_bandpass_monitor()
+    assert next(responses) == expected_return_3
+
+    with pytest.raises(StopIteration):
+        _ = next(responses)
+    mock_backend.start_bandpass_monitor.assert_called_once_with("configuration_string")
+
+
+def test_stop_bandpass_monitor(
+    daq_client: DaqClient, mock_backend: unittest.mock.Mock
+) -> None:
+    """
+    Test that ``stop_bandpass_monitor`` results in the expected backend call.
+
+    :param daq_client: the DAQ client object
+    :param mock_backend: a mock backend for the DAQ server.
+    """
+    expected_return = (ResultCode.OK, "Bandpass monitor stopping.")
+    mock_backend.stop_bandpass_monitor.return_value = expected_return
+
+    response = daq_client.stop_bandpass_monitor()
+    assert response == expected_return
+    mock_backend.stop_bandpass_monitor.assert_called_once_with()

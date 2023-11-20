@@ -13,7 +13,7 @@ from contextlib import contextmanager
 from typing import Any, Iterator, Protocol
 
 import grpc
-from ska_control_model import ResultCode
+from ska_control_model import ResultCode, TaskStatus
 
 from .generated_code import daq_pb2, daq_pb2_grpc
 
@@ -104,6 +104,38 @@ class DaqServerBackendProtocol(Protocol):
 
         :returns: A status dictionary.
         """  # noqa: DAR202
+
+    def start_bandpass_monitor(
+        self: DaqServerBackendProtocol,
+        argin: str,
+    ) -> Iterator[tuple[TaskStatus, str, str | None, str | None, str | None]]:
+        """
+        Begin monitoring antenna bandpasses.
+
+        :param argin: A json string with keywords
+            - station_config_path
+            Path to a station configuration file.
+            - plot_directory
+            Directory in which to store bandpass plots.
+            - monitor_rms
+            Whether or not to additionally produce RMS plots.
+            Default: False.
+            - auto_handle_daq
+            Whether DAQ should be automatically reconfigured,
+            started and stopped without user action if necessary.
+            This set to False means we expect DAQ to already
+            be properly configured and listening for traffic
+            and DAQ will not be stopped when `StopBandpassMonitor`
+            is called.
+            Default: False.
+
+        :return: A streamed response containing bandpass plots.
+        """  # noqa: DAR202
+
+    def stop_bandpass_monitor(
+        self: DaqServerBackendProtocol,
+    ) -> tuple[ResultCode, str]:
+        """Cease monitoring antenna bandpasses."""  # noqa: DAR202
 
 
 class DaqServer(daq_pb2_grpc.DaqServicer):
@@ -270,6 +302,52 @@ class DaqServer(daq_pb2_grpc.DaqServicer):
         status = self._backend.get_status()
         return daq_pb2.daqStatusResponse(
             status=json.dumps(status),
+        )
+
+    def BandpassMonitorStart(
+        self: DaqServer,
+        request: daq_pb2.bandpassMonitorStartRequest,
+        context: grpc.ServicerContext,
+    ) -> Iterator[daq_pb2.bandpassMonitorStartResponse]:
+        """
+        Begin monitoring antenna bandpasses.
+
+        :param request: the gRPC request
+        :param context: the gRPC servicer context
+        """
+        for update in self._backend.start_bandpass_monitor(request.config):
+            if isinstance(update, dict):
+                result_code = update["result_code"]
+                message = update["message"]
+                x_bandpass = None
+                y_bandpass = None
+                rms = None
+            else:
+                (result_code, message, x_bandpass, y_bandpass, rms) = update
+
+            yield daq_pb2.bandpassMonitorStartResponse(
+                result_code=result_code,  # type: ignore[arg-type]
+                message=message,
+                x_bandpass_plot=x_bandpass,
+                y_bandpass_plot=y_bandpass,
+                rms_plot=rms,
+            )
+
+    def BandpassMonitorStop(
+        self: DaqServer,
+        request: daq_pb2.bandpassMonitorStopRequest,
+        context: grpc.ServicerContext,
+    ) -> daq_pb2.commandResponse:
+        """
+        Stop monitoring antenna bandpasses.
+
+        :param request: the gRPC request
+        :param context: the gRPC servicer context
+        """
+        (result_code, message) = self._backend.stop_bandpass_monitor()
+        return daq_pb2.commandResponse(
+            result_code=result_code,  # type: ignore[arg-type]
+            message=message,
         )
 
 
